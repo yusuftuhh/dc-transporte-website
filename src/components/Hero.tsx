@@ -29,24 +29,12 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-32">
         <div className="max-w-3xl">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand/15 backdrop-blur-sm border border-brand/20 rounded-full text-brand-light text-sm font-body font-medium tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-              Ihr Logistikpartner seit 2014
-            </span>
-          </motion.div>
-
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-8 font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-0 font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
           >
             D & C
             <br />
@@ -57,7 +45,7 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.55 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-6 text-lg sm:text-xl text-white/60 font-body leading-relaxed max-w-xl"
           >
             Transportlösungen für jede logistische Herausforderung.
@@ -68,7 +56,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
             className="mt-10 flex flex-col sm:flex-row items-start gap-4"
           >
             <button

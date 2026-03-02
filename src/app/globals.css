@@ -69,6 +69,7 @@ body {
   pointer-events: none;
 }
 
+
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
