@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useAnimationFrame } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 const partners = [
   { name: 'H. Gautzsch Hamburg', logo: '/images/partners/gautzsch.png', url: 'https://www.gautzsch-hamburg.de/' },
@@ -10,39 +10,19 @@ const partners = [
   { name: 'Nagel-Group', logo: '/images/partners/nagel.png', url: 'https://www.nagel-group.com/' },
 ]
 
-const allPartners = [...partners, ...partners, ...partners, ...partners]
+// 6x for seamless CSS loop (translateX(-50%) loops perfectly with 2 halves)
+const allPartners = [...partners, ...partners, ...partners, ...partners, ...partners, ...partners]
 
 export default function Partners() {
   const sectionRef = useRef<HTMLElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
-  const baseX = useMotionValue(0)
-  const [trackWidth, setTrackWidth] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   })
 
-  // Scroll parallax offset
-  const scrollX = useTransform(scrollYProgress, [0, 1], [100, -300])
-  const smoothScrollX = useSpring(scrollX, { stiffness: 80, damping: 30 })
-
-  // Measure track width for seamless loop
-  useEffect(() => {
-    if (trackRef.current) {
-      setTrackWidth(trackRef.current.scrollWidth / 2)
-    }
-  }, [])
-
-  // Slow auto-drift animation
-  useAnimationFrame((_, delta) => {
-    const speed = 0.02 // px per ms — very slow drift
-    let newX = baseX.get() - delta * speed
-    if (trackWidth > 0 && Math.abs(newX) >= trackWidth) {
-      newX = 0
-    }
-    baseX.set(newX)
-  })
+  // Scroll parallax adds extra horizontal shift on top of the CSS drift
+  const parallaxX = useTransform(scrollYProgress, [0, 1], [80, -200])
 
   return (
     <section ref={sectionRef} className="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
@@ -63,34 +43,33 @@ export default function Partners() {
         </motion.div>
       </div>
 
-      {/* Combined: slow auto-drift + scroll parallax */}
       <div className="relative">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
 
-        <motion.div
-          ref={trackRef}
-          style={{ x: baseX, translateX: smoothScrollX }}
-          className="flex items-center gap-28 sm:gap-40 lg:gap-52 w-max px-20"
-        >
-          {allPartners.map((partner, i) => (
-            <a
-              key={`${partner.name}-${i}`}
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 flex items-center justify-center h-16 px-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
-              title={partner.name}
-            >
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                className="h-10 sm:h-12 w-auto max-w-[200px] object-contain"
-                loading="lazy"
-              />
-            </a>
-          ))}
+        {/* Scroll parallax wrapper */}
+        <motion.div style={{ x: parallaxX }}>
+          {/* CSS auto-drift inside */}
+          <div className="partner-drift flex items-center gap-12 sm:gap-24 lg:gap-40 w-max">
+            {allPartners.map((partner, i) => (
+              <a
+                key={`${partner.name}-${i}`}
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 flex items-center justify-center h-16 px-2 sm:px-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                title={partner.name}
+              >
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="h-9 sm:h-12 w-auto max-w-[140px] sm:max-w-[200px] object-contain"
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

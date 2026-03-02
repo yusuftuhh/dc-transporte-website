@@ -70,6 +70,15 @@ body {
 }
 
 
+/* Partner slow auto-drift */
+@keyframes partner-drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.partner-drift {
+  animation: partner-drift 80s linear infinite;
+}
+
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
