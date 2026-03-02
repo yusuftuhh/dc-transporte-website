@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useAnimationFrame } from 'framer-motion'
 
 const partners = [
   { name: 'H. Gautzsch Hamburg', logo: '/images/partners/gautzsch.png', url: 'https://www.gautzsch-hamburg.de/' },
@@ -10,17 +10,39 @@ const partners = [
   { name: 'Nagel-Group', logo: '/images/partners/nagel.png', url: 'https://www.nagel-group.com/' },
 ]
 
-const allPartners = [...partners, ...partners, ...partners]
+const allPartners = [...partners, ...partners, ...partners, ...partners]
 
 export default function Partners() {
   const sectionRef = useRef<HTMLElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const baseX = useMotionValue(0)
+  const [trackWidth, setTrackWidth] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ['5%', '-45%'])
+  // Scroll parallax offset
+  const scrollX = useTransform(scrollYProgress, [0, 1], [100, -300])
+  const smoothScrollX = useSpring(scrollX, { stiffness: 80, damping: 30 })
+
+  // Measure track width for seamless loop
+  useEffect(() => {
+    if (trackRef.current) {
+      setTrackWidth(trackRef.current.scrollWidth / 2)
+    }
+  }, [])
+
+  // Slow auto-drift animation
+  useAnimationFrame((_, delta) => {
+    const speed = 0.02 // px per ms — very slow drift
+    let newX = baseX.get() - delta * speed
+    if (trackWidth > 0 && Math.abs(newX) >= trackWidth) {
+      newX = 0
+    }
+    baseX.set(newX)
+  })
 
   return (
     <section ref={sectionRef} className="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
@@ -41,14 +63,15 @@ export default function Partners() {
         </motion.div>
       </div>
 
-      {/* Scroll Parallax Track */}
+      {/* Combined: slow auto-drift + scroll parallax */}
       <div className="relative">
         {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
 
         <motion.div
-          style={{ x }}
+          ref={trackRef}
+          style={{ x: baseX, translateX: smoothScrollX }}
           className="flex items-center gap-28 sm:gap-40 lg:gap-52 w-max px-20"
         >
           {allPartners.map((partner, i) => (
