@@ -4,6 +4,7 @@ import Services from '@/components/Services'
 import Stats from '@/components/Stats'
 import About from '@/components/About'
 import Partners from '@/components/Partners'
+import Cooperation from '@/components/Cooperation'
 import QuoteForm from '@/components/QuoteForm'
 import Footer from '@/components/Footer'
 
@@ -17,6 +18,7 @@ export default function Home() {
         <Stats />
         <About />
         <Partners />
+        <Cooperation />
         <QuoteForm />
       </main>
       <Footer />

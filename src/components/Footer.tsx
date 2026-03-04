@@ -137,6 +137,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} D & C Transporte und Handels GmbH. Alle Rechte vorbehalten.
           </p>
           <div className="flex items-center gap-6">
+            <Link href="/kooperation" className="font-body text-xs text-white/20 hover:text-white/40 transition-colors">Kooperation</Link>
             <Link href="/impressum" className="font-body text-xs text-white/20 hover:text-white/40 transition-colors">Impressum</Link>
             <Link href="/datenschutz" className="font-body text-xs text-white/20 hover:text-white/40 transition-colors">Datenschutz</Link>
           </div>
