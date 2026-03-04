@@ -1,8 +1,34 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Truck, ArrowRight } from 'lucide-react'
+import { Truck, ArrowRight, CheckCircle2, FileText, Shield } from 'lucide-react'
 import Link from 'next/link'
+
+const benefits = [
+  'Vollauslastung (regelmässig Arbeit)',
+  'Tagespauschale (fester Betrag pro Tag)',
+  'Nahverkehr (keine Fernfahrten)',
+  'Pünktliche Bezahlung',
+]
+
+const transportTypes = [
+  'Lebensmittel',
+  'Palettenware / Stückgut',
+  'Elektroartikel',
+]
+
+const requirements = [
+  { icon: FileText, text: 'Gewerbeanmeldung (Transportgewerbe)' },
+  { icon: Truck, text: 'EU-Lizenz (Gemeinschaftslizenz)' },
+  { icon: Shield, text: 'Güterschadenhaftpflichtversicherung' },
+]
+
+const vehicles = [
+  '3,5 Tonner',
+  '7,5 Tonner',
+  '12 Tonner',
+  'Sattelzugmaschine',
+]
 
 export default function Cooperation() {
   return (
@@ -17,14 +43,14 @@ export default function Cooperation() {
       <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/70" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          {/* Left content */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+          {/* Left: Angebot */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex-1 text-center lg:text-left"
+            className="flex-1"
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-brand/10 border border-brand/20 rounded-full mb-6">
               <Truck size={14} className="text-brand" />
@@ -34,18 +60,50 @@ export default function Cooperation() {
             </div>
 
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight">
-              Subunternehmer
+              Angebot von D & C
               <br />
-              <span className="text-brand">gesucht</span>
+              <span className="text-brand">Transporte GmbH</span>
             </h2>
 
-            <p className="mt-6 font-body text-white/50 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Sie sind Transportunternehmer und suchen einen zuverlässigen
-              Auftraggeber? Werden Sie Teil unseres Netzwerks und profitieren
-              Sie von regelmäßigen Aufträgen im nationalen Güterverkehr.
+            <p className="mt-6 font-body text-white/50 text-lg leading-relaxed max-w-lg">
+              Sie würden als selbstständiger Subunternehmer für die
+              D & C Transporte GmbH fahren.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-center lg:items-start gap-4">
+            {/* Transportarten */}
+            <div className="mt-8">
+              <h3 className="font-display font-bold text-sm uppercase tracking-wider text-white/40 mb-4">
+                Transportarten
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {transportTypes.map((t) => (
+                  <span key={t} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg font-body text-sm text-white/70">
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-3 font-body text-sm text-white/30">
+                Einsatzgebiet: Hamburg & Hannover (Nahverkehr)
+              </p>
+            </div>
+
+            {/* Versprochen */}
+            <div className="mt-8">
+              <h3 className="font-display font-bold text-sm uppercase tracking-wider text-white/40 mb-4">
+                Das bieten wir
+              </h3>
+              <ul className="space-y-3">
+                {benefits.map((b) => (
+                  <li key={b} className="flex items-center gap-3">
+                    <CheckCircle2 size={18} className="text-brand flex-shrink-0" />
+                    <span className="font-body text-white/70">{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* CTA */}
+            <div className="mt-10 flex flex-col sm:flex-row items-start gap-4">
               <Link
                 href="/kooperation"
                 className="group flex items-center gap-3 px-8 py-4 bg-brand text-white font-body font-semibold text-base rounded-lg
@@ -66,35 +124,41 @@ export default function Cooperation() {
             </div>
           </motion.div>
 
-          {/* Right visual */}
+          {/* Right: Voraussetzungen */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex-shrink-0 hidden lg:block"
+            className="lg:w-[380px] flex-shrink-0"
           >
-            <div className="relative">
-              {/* Stats cards */}
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { value: '15+', label: 'Eigene\nFahrzeuge' },
-                  { value: '24/7', label: 'Auftrags-\nverfügbarkeit' },
-                  { value: '100%', label: 'Pünktliche\nBezahlung' },
-                  { value: 'DE', label: 'Bundesweite\nRouten' },
-                ].map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
-                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center
-                      hover:bg-white/10 hover:border-brand/30 transition-all duration-300"
-                  >
-                    <div className="font-impact font-bold text-3xl text-brand">{stat.value}</div>
-                    <div className="mt-2 font-body text-xs text-white/40 whitespace-pre-line leading-snug">{stat.label}</div>
-                  </motion.div>
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+              <h3 className="font-display font-bold text-lg text-white mb-6">
+                Voraussetzungen
+              </h3>
+
+              {/* Dokumente */}
+              <div className="space-y-4 mb-8">
+                {requirements.map((req) => (
+                  <div key={req.text} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <req.icon size={16} className="text-brand" />
+                    </div>
+                    <span className="font-body text-sm text-white/60 leading-snug pt-1">{req.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Fahrzeuge */}
+              <h4 className="font-display font-bold text-sm uppercase tracking-wider text-white/40 mb-4">
+                Eigenes Fahrzeug
+              </h4>
+              <div className="grid grid-cols-2 gap-2">
+                {vehicles.map((v) => (
+                  <div key={v} className="px-3 py-2.5 bg-white/5 border border-white/10 rounded-lg text-center
+                    font-body text-xs text-white/50 font-medium">
+                    {v}
+                  </div>
                 ))}
               </div>
             </div>

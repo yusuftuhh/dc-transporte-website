@@ -29,12 +29,10 @@ const steps = [
 ]
 
 const vehicleOptions = [
-  'Plane / Tautliner',
-  'Kofferaufbau',
-  'Kühlfahrzeug',
-  'Pritsche',
-  'Sattelzug',
-  'Transporter / Sprinter',
+  '3,5 Tonner',
+  '7,5 Tonner',
+  '12 Tonner',
+  'Sattelzugmaschine',
 ]
 
 const fleetOptions = ['1–5', '6–15', '16+']
@@ -141,21 +139,21 @@ export default function KooperationPage() {
               className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden"
             >
               {/* Progress Steps */}
-              <div className="px-8 pt-8 pb-6 flex items-center justify-center gap-8">
+              <div className="px-4 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 flex items-center justify-center gap-2 sm:gap-8">
                 {steps.map((s, i) => (
                   <div key={s.label} className="flex items-center">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-400 ${
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-400 ${
                         i < step ? 'bg-brand text-white' : i === step ? 'bg-brand/10 text-brand ring-2 ring-brand/20' : 'bg-gray-100 text-gray-300'
                       }`}>
-                        {i < step ? <Check size={18} strokeWidth={2.5} /> : <s.icon size={18} />}
+                        {i < step ? <Check size={16} strokeWidth={2.5} /> : <s.icon size={16} />}
                       </div>
-                      <span className={`font-body text-sm font-medium transition-colors ${
+                      <span className={`font-body text-xs sm:text-sm font-medium transition-colors ${
                         i <= step ? 'text-dark' : 'text-gray-300'
                       }`}>{s.label}</span>
                     </div>
                     {i < 1 && (
-                      <div className="mx-6 sm:mx-10 h-px w-12 sm:w-20 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="mx-3 sm:mx-10 h-px w-8 sm:w-20 bg-gray-200 rounded-full overflow-hidden">
                         <motion.div className="h-full bg-brand rounded-full"
                           animate={{ width: step > 0 ? '100%' : '0%' }}
                           transition={{ duration: 0.4 }}
@@ -169,7 +167,7 @@ export default function KooperationPage() {
               <div className="h-px bg-gray-100" />
 
               {/* Form Body */}
-              <div className="p-8 min-h-[400px]">
+              <div className="p-4 sm:p-8 min-h-[400px]">
                 <AnimatePresence mode="wait" custom={direction}>
                   {submitted ? (
                     <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
@@ -236,7 +234,7 @@ export default function KooperationPage() {
                             </Field>
 
                             <Field label="Fahrzeugtypen" error={errors.vehicleTypes?.message}>
-                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                              <div className="grid grid-cols-2 gap-2">
                                 {vehicleOptions.map((type) => (
                                   <button
                                     key={type}
@@ -302,7 +300,7 @@ export default function KooperationPage() {
               {!submitted && (
                 <>
                   <div className="h-px bg-gray-100" />
-                  <div className="px-8 py-5 flex justify-between">
+                  <div className="px-4 sm:px-8 py-4 sm:py-5 flex justify-between">
                     <button onClick={goBack} disabled={step === 0}
                       className={`flex items-center gap-2 px-5 py-2.5 font-body text-sm rounded-lg transition-all ${
                         step === 0 ? 'text-gray-200 cursor-not-allowed' : 'text-gray-500 hover:text-dark hover:bg-gray-50'
