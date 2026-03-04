@@ -78,7 +78,7 @@ export default function Cooperation() {
               {/* Stats cards */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { value: '50+', label: 'Partner\nim Netzwerk' },
+                  { value: '15+', label: 'Eigene\nFahrzeuge' },
                   { value: '24/7', label: 'Auftrags-\nverfügbarkeit' },
                   { value: '100%', label: 'Pünktliche\nBezahlung' },
                   { value: 'DE', label: 'Bundesweite\nRouten' },
