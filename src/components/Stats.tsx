@@ -5,7 +5,7 @@ import { useCountUp } from '@/hooks/useCountUp'
 
 const stats = [
   { value: 500, suffix: '+', label: 'Transporte / Monat' },
-  { value: 50, suffix: '+', label: 'Fahrzeuge' },
+  { value: 15, suffix: '+', label: 'Fahrzeuge' },
   { value: 10, suffix: '+', label: 'Jahre Erfahrung' },
   { value: 98, suffix: '%', label: 'Kundenzufriedenheit' },
 ]
