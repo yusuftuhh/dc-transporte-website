@@ -35,7 +35,7 @@ export default function Datenschutz() {
               D & C Transporte und Handels GmbH<br />
               Friedrich-Ebert-Damm 204<br />
               22047 Hamburg<br />
-              Telefon: +49 172 577 377 7<br />
+              
               E-Mail: info@dc-transporte.de
             </p>
             <p className="mt-3">

@@ -15,8 +15,6 @@ const services = [
 
 const contact = [
   { icon: MapPin, label: 'Friedrich-Ebert-Damm 204, 22047 Hamburg' },
-  { icon: Phone, label: '+49 176 415 593 98' },
-  { icon: Phone, label: '+49 172 577 377 7' },
   { icon: Mail, label: 'info@dc-transporte.de' },
   { icon: Clock, label: 'Mo – Fr: 06:00 – 20:00 Uhr' },
 ]

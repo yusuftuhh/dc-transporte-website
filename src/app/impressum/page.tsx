@@ -51,8 +51,7 @@ export default function Impressum() {
               Kontakt
             </h2>
             <p>
-              Mobil: +49 176 415 593 98<br />
-              Telefon: +49 172 577 377 7<br />
+
               E-Mail: info@dc-transporte.de
             </p>
           </section>

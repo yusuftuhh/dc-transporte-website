@@ -74,15 +74,7 @@ export default function Header() {
 
             {/* CTA */}
             <div className="hidden lg:flex items-center gap-4">
-              <a
-                href="tel:+491725773777"
-                className={`flex items-center gap-2 text-sm font-body font-medium transition-colors ${
-                  scrolled ? 'text-gray-500' : 'text-white/70'
-                }`}
-              >
-                <Phone size={14} />
-                +49 172 577 377 7
-              </a>
+              
               <button
                 onClick={() => scrollTo('#anfrage')}
                 className="px-6 py-2.5 bg-brand text-white text-sm font-body font-semibold rounded-lg

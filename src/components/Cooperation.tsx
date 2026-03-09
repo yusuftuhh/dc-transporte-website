@@ -113,14 +113,7 @@ export default function Cooperation() {
                 Jetzt bewerben
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <a
-                href="tel:+491725773777"
-                className="flex items-center gap-2 px-6 py-4 text-white/50 font-body font-medium text-base
-                  border border-white/10 rounded-lg hover:bg-white/5 hover:text-white/80 hover:border-white/20
-                  transition-all duration-300"
-              >
-                Oder direkt anrufen
-              </a>
+              
             </div>
           </motion.div>
 
