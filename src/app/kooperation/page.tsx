@@ -59,6 +59,8 @@ export default function KooperationPage() {
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
   const { register, handleSubmit, trigger, setValue, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -80,7 +82,23 @@ export default function KooperationPage() {
     if (valid) { setDirection(1); setStep(1) }
   }
   const goBack = () => { setDirection(-1); setStep(0) }
-  const onSubmit = () => setSubmitted(true)
+  const onSubmit = async (formData: FormData) => {
+    setSending(true)
+    setError('')
+    try {
+      const res = await fetch('/api/kooperation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) throw new Error()
+      setSubmitted(true)
+    } catch {
+      setError('Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.')
+    } finally {
+      setSending(false)
+    }
+  }
 
   const toggleVehicle = (type: string) => {
     const current = selectedVehicles
@@ -314,13 +332,18 @@ export default function KooperationPage() {
                         Weiter <ArrowRight size={16} />
                       </button>
                     ) : (
-                      <button onClick={handleSubmit(onSubmit)}
+                      <button onClick={handleSubmit(onSubmit)} disabled={sending}
                         className="flex items-center gap-2 px-6 py-2.5 bg-brand text-white font-body text-sm font-semibold rounded-lg
-                          hover:bg-brand-dark transition-all duration-300">
-                        Anfrage senden <Send size={16} />
+                          hover:bg-brand-dark transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        {sending ? 'Wird gesendet...' : 'Anfrage senden'} <Send size={16} />
                       </button>
                     )}
                   </div>
+                  {error && (
+                    <div className="px-4 sm:px-8 pb-4">
+                      <p className="text-red-500 text-sm font-body text-center">{error}</p>
+                    </div>
+                  )}
                 </>
               )}
             </motion.div>

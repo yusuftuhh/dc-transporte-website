@@ -54,6 +54,8 @@ export default function QuoteForm() {
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
   const { register, handleSubmit, trigger, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -71,7 +73,23 @@ export default function QuoteForm() {
     if (valid) { setDirection(1); setStep(s => Math.min(s + 1, 2)) }
   }
   const goBack = () => { setDirection(-1); setStep(s => Math.max(s - 1, 0)) }
-  const onSubmit = () => setSubmitted(true)
+  const onSubmit = async (formData: FormData) => {
+    setSending(true)
+    setError('')
+    try {
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) throw new Error()
+      setSubmitted(true)
+    } catch {
+      setError('Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.')
+    } finally {
+      setSending(false)
+    }
+  }
 
   const inputClass = `w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 font-body text-dark
     placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:border-brand/30 focus:ring-brand/10
@@ -243,13 +261,18 @@ export default function QuoteForm() {
                     Weiter <ArrowRight size={16} />
                   </button>
                 ) : (
-                  <button onClick={handleSubmit(onSubmit)}
+                  <button onClick={handleSubmit(onSubmit)} disabled={sending}
                     className="flex items-center gap-2 px-6 py-2.5 bg-brand text-white font-body text-sm font-semibold rounded-lg
-                      hover:bg-brand-dark transition-all duration-300">
-                    Anfrage senden <Send size={16} />
+                      hover:bg-brand-dark transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {sending ? 'Wird gesendet...' : 'Anfrage senden'} <Send size={16} />
                   </button>
                 )}
               </div>
+              {error && (
+                <div className="px-8 pb-4">
+                  <p className="text-red-500 text-sm font-body text-center">{error}</p>
+                </div>
+              )}
             </>
           )}
         </motion.div>
